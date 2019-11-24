@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>boardlist</title>
+</head>
+<body>
+<h1>게시판 글목록</h1>
+{{request.session.loginuser}}
+
+<table>
+    <tr><th>글번호</th><th>제목</th><th>작성자</th><th>등록일</th></tr>
+    {% if board_list %}
+        {% for board in board_list %}
+        <tr><td>{{ board.id }}</td>
+            <td><a href="{% url 'board:boardDetail' board.id %}">{{board.title}}</a></td>
+            <td>{{ board.writer_id }}</td>
+            <td>{{ board.pub_date }}</td></tr>
+        {% endfor %}
+    {% endif %}
+</table>
+
+<table>
+    <tr>
+        <td>
+            {% for p in totalPageCnt %}
+                {% if curr_page != p %}<a href="{% url 'board:boardList' p %}">{{p}}</a>
+                {% else %} {{ p }}
+                {% endif %}
+            {% endfor %}
+        </td>
+    </tr>
+</table>
+
+</body>
+</html>
